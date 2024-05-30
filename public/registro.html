@@ -1,0 +1,103 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Ingreso</title>
+</head>
+<body>
+    <form id="registroIngresoForm">
+        <label for="codigo">Codigo del Estudiante:</label>
+        <input type="text" id="codigo" name="codigo_estudiante" required><br>
+
+        <label for="nombre">Nombre del Estudiante:</label>
+        <input type="text" id="nombre" name="nombre_estudiante" required><br>
+
+        <label for="programa">Programa:</label>
+        <select id="programa" name="programa_id" required>
+            <!-- Opciones generadas dinámicamente -->
+            <option>Ing. Sistemas</option>
+            <option>Ing. Multimedia</option>
+            <option>Arquitectura</option>
+            <option>Contabilidad</option>
+        </select><br>
+
+        <label for="fecha_hora_ingreso">Fecha y Hora de Ingreso:</label>
+        <input type="datetime-local" id="fecha_hora_ingreso" name="fecha_hora_ingreso" required><br>
+
+        <label for="sala">Sala:</label>
+        <select id="sala" name="sala_id" required>
+            <option>201G</option>
+            <option>202H</option>
+            <option>203I</option>
+            <option>301G</option>
+            <option>302H</option>
+            <option>303I</option>
+        </select><br>
+
+        <label for="responsable">Responsable:</label>
+        <select id="responsable" name="responsable_id" required>
+            <option>Juan Perez</option>
+            <option>Ana Lopeez</option>
+            <option>Juan Perez</option>
+            <option>Ana Lopeez</option>
+        </select><br>
+
+        <button type="submit">Registrar Ingreso</button>
+    </form>
+
+    <script>
+        document.getElementById('registroIngresoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/ingresos', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Ingreso registrado con éxito');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al registrar el ingreso');
+            });
+        });
+
+        // Fetch y llenar opciones de programas, salas y responsables
+        /*fetch('/programas')
+            .then(response => response.json())
+            .then(data => {
+                let programaSelect = document.getElementById('programa');
+                data.forEach(programa => {
+                    let option = document.createElement('option');
+                    option.value = programa.id;
+                    option.text = programa.nombre;
+                    programaSelect.appendChild(option);
+                });
+            });
+
+        fetch('/salas')
+            .then(response => response.json())
+            .then(data => {
+                let salaSelect = document.getElementById('sala');
+                data.forEach(sala => {
+                    let option = document.createElement('option');
+                    option.value = sala.id;
+                    option.text = sala.nombre;
+                    salaSelect.appendChild(option);
+                });
+            });
+
+        fetch('/responsables')
+            .then(response => response.json())
+            .then(data => {
+                let responsableSelect = document.getElementById('responsable');
+                data.forEach(responsable => {
+                    let option = document.createElement('option');
+                    option.value = responsable.id;
+                    option.text = responsable.nombre;
+                    responsableSelect.appendChild(option);
+                });
+        });*/
+    </script>
+</body>
+</html>
